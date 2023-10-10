@@ -128,7 +128,8 @@ Java, Spring boot, Spring Security, Jwt, PostgreSQL
 Изменение пароля пользователя. Пример запроса:
 ```
 {
-  "password": "relexthebest"
+  "old_password": "root",
+  "new_password": "relexthebest"
 }
 ```
 #### GET /delete
