@@ -109,6 +109,7 @@ Java, Spring boot, Spring Security, Jwt, PostgreSQL
 #### GET /signout 
 Выход из текущей сессии.
 Разлогинивание реализовано путем занесения токена в чёрный список.
+Для реализации черного списка была использована библиотека https://github.com/jhalterman/expiringmap
 #### POST /change-information
 Изменение информации профиля. Примеры запросов:
 ```
