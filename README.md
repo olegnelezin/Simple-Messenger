@@ -28,7 +28,7 @@ Java, Spring boot, Spring Security, Jwt, PostgreSQL
     </ul>
   <li><b>Дополнительно:</b></li>
     <ul>
-      <li>Использована база данных PostgreSQL</li>
+      <li>Использована база данных PostgreSQL.</li>
     </ul>
 </ul>
 
