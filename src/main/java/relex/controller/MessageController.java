@@ -53,6 +53,7 @@ public class MessageController {
         for (int i = 0; i < recievedMessages.size(); i++) {
             messages.append(recievedMessages.get(i).getMessage()).append("\n");
         }
+
         return ResponseEntity.ok(messages);
     }
 }
