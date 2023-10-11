@@ -12,6 +12,8 @@ import relex.payload.response.MessageResponse;
 import relex.repository.MessageRepository;
 import relex.repository.UserRepository;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class MessageController {
@@ -40,6 +42,17 @@ public class MessageController {
     ResponseEntity<?> getMessages(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         token = token.substring(7);
         User user = userRepository.findByUsername(jwtUtils.getUserNameFromJwtToken(token));
-        return ResponseEntity.ok("");
+        List<Message> sendedMessages = messageRepository.findMessageByUserIdWhoSend(user.getId());
+        List<Message> recievedMessages = messageRepository.findMessageByUserIdWhoRecieve(user.getId());
+        StringBuilder messages = new StringBuilder();
+        messages.append("Sended Messages:\n");
+        for (int i = 0; i < sendedMessages.size(); i++) {
+            messages.append(sendedMessages.get(0).getMessage()).append("\n");
+        }
+        messages.append("\n").append("Recieved Messages:").append("\n");
+        for (int i = 0; i < recievedMessages.size(); i++) {
+            messages.append(recievedMessages.get(i).getMessage()).append("\n");
+        }
+        return ResponseEntity.ok(messages);
     }
 }

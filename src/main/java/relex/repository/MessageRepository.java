@@ -7,7 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import relex.model.Message;
 
+import java.util.List;
+
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
-
+    List<Message> findMessageByUserIdWhoSend(long id);
+    List<Message> findMessageByUserIdWhoRecieve(long id);
 }
