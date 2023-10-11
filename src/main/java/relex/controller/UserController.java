@@ -23,7 +23,6 @@ import relex.service.LogoutService;
 @AllArgsConstructor
 @RestController
 public class UserController {
-
     private final UserRepository userRepository;
     private final LogoutService logoutService;
     private final JwtUtils jwtUtils;

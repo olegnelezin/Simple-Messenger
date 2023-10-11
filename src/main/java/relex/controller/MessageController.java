@@ -34,7 +34,6 @@ public class MessageController {
         } else {
             return ResponseEntity.status(400).body(new MessageResponse("Can not find user"));
         }
-
     }
 
     @GetMapping("/get-messages")
