@@ -9,7 +9,5 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class ChangePasswordRequest {
     @NotNull
-    private String old_password;
-    @NotNull
     private String new_password;
 }

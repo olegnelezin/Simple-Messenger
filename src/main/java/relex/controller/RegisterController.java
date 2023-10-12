@@ -21,7 +21,6 @@ import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
 @Slf4j
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @AllArgsConstructor
 public class RegisterController {

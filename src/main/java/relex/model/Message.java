@@ -30,7 +30,9 @@ public class Message {
     private long userIdWhoRecieve;
 
     private String usernameWhoSend;
+
     private String usernameWhoRecieve;
+
     private String message;
     public Message(long userIdWhoSend, long userIdWhoRecieve, String usernameWhoSend, String usernameWhoRecieve, String message){
         this.userIdWhoSend = userIdWhoSend;

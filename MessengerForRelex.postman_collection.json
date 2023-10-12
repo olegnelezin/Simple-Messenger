@@ -1,0 +1,239 @@
+{
+	"info": {
+		"_postman_id": "3292091b-c833-4fc8-96d8-3df4138b2590",
+		"name": "MessengerForRelex",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28905055"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/register",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": ""
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testRelex\",\r\n    \"password\": \"root\",\r\n    \"firstname\": \"admin\",\r\n    \"lastname\": \"adminovich\",\r\n    \"email\": \"relex@mail.ru\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/register",
+				"description": "User registration\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testRelex\",\r\n    \"password\": \"root\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/login",
+				"description": "User login"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/info",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0UmVsZXgiLCJpYXQiOjE2OTcxMzQ4OTcsImV4cCI6MTY5NzEzNTQ5N30.fBwa7SUOrMhswkstPcluDkBfLxKMx62WPYxR6VyAL1E"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/info",
+				"description": "User information"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/change-information",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0UmVsZXgiLCJpYXQiOjE2OTcxMzQ4OTcsImV4cCI6MTY5NzEzNTQ5N30.fBwa7SUOrMhswkstPcluDkBfLxKMx62WPYxR6VyAL1E"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"Jordan\",\r\n    \"lastname\": \"Belfort\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/change-information",
+				"description": "Change user information"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/deactivate",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0UmVsZXgiLCJpYXQiOjE2OTcxMzQ4OTcsImV4cCI6MTY5NzEzNTQ5N30.fBwa7SUOrMhswkstPcluDkBfLxKMx62WPYxR6VyAL1E"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/deactivate",
+				"description": "Deactivate user account"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/activate",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0UmVsZXgiLCJpYXQiOjE2OTcxMzQ4OTcsImV4cCI6MTY5NzEzNTQ5N30.fBwa7SUOrMhswkstPcluDkBfLxKMx62WPYxR6VyAL1E"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testRelex\",\r\n    \"password\": \"root\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/activate",
+				"description": "Activation user account after deactivation"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/change-password",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0UmVsZXgiLCJpYXQiOjE2OTcxMzU1NzUsImV4cCI6MTY5NzEzNjE3NX0.MZkEdGyK0nIK1EkA3rb_zgxvni2gj7tImZvPUVkqXj4"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"new_password\": \"toor\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/change-password",
+				"description": "Change user password"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/send-message",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0UmVsZXgiLCJpYXQiOjE2OTcxMzU1NzUsImV4cCI6MTY5NzEzNjE3NX0.MZkEdGyK0nIK1EkA3rb_zgxvni2gj7tImZvPUVkqXj4"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"oleg\",\r\n    \"message\": \"Hello relex\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/send-message",
+				"description": "Send message to user by username"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/get-messages",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0UmVsZXgiLCJpYXQiOjE2OTcxMzU1NzUsImV4cCI6MTY5NzEzNjE3NX0.MZkEdGyK0nIK1EkA3rb_zgxvni2gj7tImZvPUVkqXj4"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"oleg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/get-messages",
+				"description": "View messages history with choosen user"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0UmVsZXgiLCJpYXQiOjE2OTcxMzU1NzUsImV4cCI6MTY5NzEzNjE3NX0.MZkEdGyK0nIK1EkA3rb_zgxvni2gj7tImZvPUVkqXj4"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "localhost:8080/delete",
+				"description": "Delete user account"
+			},
+			"response": []
+		}
+	]
+}

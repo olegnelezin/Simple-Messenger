@@ -47,11 +47,12 @@ public class MessageController {
         token = token.substring(7);
         User user1 = userRepository.findByUsername(jwtUtils.getUserNameFromJwtToken(token));
         User user2 = userRepository.findByUsername(getMessagesRequest.getUsername());
-        List<Message> messages1 = messageRepository.findMessageByUserIdWhoSendAndUserIdWhoRecieve(user1.getId(), user2.getId());
-        List<Message> messages2 = messageRepository.findMessageByUserIdWhoSendAndUserIdWhoRecieve(user2.getId(), user1.getId());
-        List<Message> messages = new ArrayList<>();
-        messages.addAll(messages1);
-        messages.addAll(messages2);
+        if (user2 == null) {
+            return ResponseEntity.status(400).body(new MessageResponse("Can not find user with this username"));
+        }
+        long user1Id = user1.getId();
+        long user2Id = user2.getId();
+        List<Message> messages = messageRepository.findMessageByUserIdWhoSendAndUserIdWhoRecieveOrUserIdWhoRecieveAndUserIdWhoSend(user1Id, user2Id, user1Id, user2Id);
         return ResponseEntity.ok(new GetMessagesResponse(messages));
     }
 }
