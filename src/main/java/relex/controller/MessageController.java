@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.*;
 import relex.jwt.JwtUtils;
 import relex.model.Message;
 import relex.model.User;
+import relex.payload.request.GetMessagesRequest;
 import relex.payload.request.SendMessageRequest;
 import relex.payload.response.GetMessagesResponse;
 import relex.payload.response.MessageResponse;
 import relex.repository.MessageRepository;
 import relex.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,11 +41,17 @@ public class MessageController {
         }
     }
 
-    @GetMapping("/get-messages")
-    ResponseEntity<?> getMessages(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    @PostMapping("/get-messages")
+    ResponseEntity<?> getMessages(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
+                                  @RequestBody GetMessagesRequest getMessagesRequest) {
         token = token.substring(7);
-        User user = userRepository.findByUsername(jwtUtils.getUserNameFromJwtToken(token));
-        List<Message> messages = messageRepository.findMessageByUserIdWhoSendOrUserIdWhoRecieve(user.getId(), user.getId());
+        User user1 = userRepository.findByUsername(jwtUtils.getUserNameFromJwtToken(token));
+        User user2 = userRepository.findByUsername(getMessagesRequest.getUsername());
+        List<Message> messages1 = messageRepository.findMessageByUserIdWhoSendAndUserIdWhoRecieve(user1.getId(), user2.getId());
+        List<Message> messages2 = messageRepository.findMessageByUserIdWhoSendAndUserIdWhoRecieve(user2.getId(), user1.getId());
+        List<Message> messages = new ArrayList<>();
+        messages.addAll(messages1);
+        messages.addAll(messages2);
         return ResponseEntity.ok(new GetMessagesResponse(messages));
     }
 }
