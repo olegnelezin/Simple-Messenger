@@ -18,12 +18,13 @@ import relex.payload.response.MessageResponse;
 import relex.payload.response.UserInfoResponse;
 import relex.repository.UserRepository;
 import relex.service.LogoutService;
+import relex.service.UserService;
 
 
 @AllArgsConstructor
 @RestController
 public class UserController {
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final LogoutService logoutService;
     private final JwtUtils jwtUtils;
     private final PasswordEncoder encoder;
@@ -31,24 +32,23 @@ public class UserController {
     @PostMapping("/change-information")
     public ResponseEntity<?> changeUserInformation(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                                   @RequestBody ChangeInformationRequest changeInformationRequest) {
-        token = token.substring(7);
-        String username = jwtUtils.getUserNameFromJwtToken(token);
+        String username = jwtUtils.getUserNameFromJwtToken(token.substring(7));
 
         String newEmail = changeInformationRequest.getEmail();
         if (newEmail != null)
-            userRepository.changeEmail(username, newEmail);
+            userService.changeEmail(username, newEmail);
 
         String newFirstname = changeInformationRequest.getFirstname();
         if (newFirstname != null)
-            userRepository.changeFirstname(username, newFirstname);
+            userService.changeFirstname(username, newFirstname);
 
         String newLastname = changeInformationRequest.getLastname();
         if (newLastname != null)
-            userRepository.changeLastname(username, newLastname);
+            userService.changeLastname(username, newLastname);
 
         String newUsername = changeInformationRequest.getUsername();
         if (newUsername != null)
-            userRepository.changeUsername(newEmail, newUsername);
+            userService.changeUsername(newEmail, newUsername);
 
         return ResponseEntity.ok(new MessageResponse("You changed your profile information."));
     }
@@ -56,9 +56,8 @@ public class UserController {
     @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,
                                             @RequestBody ChangePasswordRequest passwordRequest) {
-        token = token.substring(7);
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        userRepository.changePassword(username, encoder.encode(passwordRequest.getNew_password()));
+        String username = jwtUtils.getUserNameFromJwtToken(token.substring(7));
+        userService.changePassword(username, encoder.encode(passwordRequest.getNew_password()));
         return ResponseEntity.ok(new MessageResponse("You changed your password."));
     }
 
@@ -68,8 +67,7 @@ public class UserController {
             HttpServletRequest request,
             HttpServletResponse response,
             Authentication authentication) {
-        token = token.substring(7);
-        logoutService.invalidateToken(token);
+        logoutService.invalidateToken(token.substring(7));
         SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
         logoutHandler.logout(request, response, authentication);
         return ResponseEntity.ok(new MessageResponse("You successfully logout!"));
@@ -77,16 +75,15 @@ public class UserController {
 
     @GetMapping("/deactivate")
     public ResponseEntity<?> deactivateAccount(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        token = token.substring(7);
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        userRepository.deactivateUser(username);
+        String username = jwtUtils.getUserNameFromJwtToken(token.substring(7));
+        userService.deactivateUser(username);
         return ResponseEntity.ok(new MessageResponse("Your account successfully deactivated. You can restore account by /activate"));
     }
 
     @PostMapping("/activate")
     public ResponseEntity<?> activateAccount(@RequestBody ActivateAccountRequest activateAccountRequest) {
         String username = activateAccountRequest.getUsername();
-        User user = userRepository.findByUsername(username);
+        User user = userService.getUserByUsername(username);
         String password = activateAccountRequest.getPassword();
         if (user.isActive()) {
             return ResponseEntity.status(400).body(new MessageResponse("Account already active!"));
@@ -95,23 +92,21 @@ public class UserController {
         } else if (encoder.encode(password).equals(user.getPassword())) {
             return ResponseEntity.status(400).body(new MessageResponse("Invalid password. Try again."));
         }
-        userRepository.activateUser(username);
+        userService.activateUser(username);
         return ResponseEntity.ok(new MessageResponse("Account successfully activated!"));
     }
 
     @GetMapping("/delete")
     public ResponseEntity<?> deleteAccount(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        token = token.substring(7);
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        userRepository.deleteUserByUsername(username);
+        String username = jwtUtils.getUserNameFromJwtToken(token.substring(7));
+        userService.deleteUserByUsername(username);
         return ResponseEntity.ok(new MessageResponse("Your account successfully deleted"));
     }
 
     @GetMapping("/info")
     public ResponseEntity<?> getInformation(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        token = token.substring(7);
-        String username = jwtUtils.getUserNameFromJwtToken(token);
-        User user = userRepository.findByUsername(username);
+        String username = jwtUtils.getUserNameFromJwtToken(token.substring(7));
+        User user = userService.getUserByUsername(username);
         UserInfoResponse userInfoResponse = new UserInfoResponse(user.getUsername(), user.getFirstname(),
                 user.getLastname(), user.getEmail());
         return ResponseEntity.ok(userInfoResponse);

@@ -16,6 +16,8 @@ import relex.payload.request.RegisterRequest;
 import relex.payload.response.MessageResponse;
 import relex.repository.RoleRepository;
 import relex.repository.UserRepository;
+import relex.service.RoleService;
+import relex.service.UserService;
 
 import javax.validation.Valid;
 import java.util.HashSet;
@@ -24,9 +26,8 @@ import java.util.Set;
 @RestController
 @AllArgsConstructor
 public class RegisterController {
-
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+    private UserService userService;
+    private RoleService roleService;
     private final PasswordEncoder encoder;
 
     @PostMapping("/register")
@@ -38,13 +39,13 @@ public class RegisterController {
             Set<Role> roles = new HashSet<>();
 
             if (strRoles == null) {
-                Role userRole = roleRepository.findByName(EnumRole.ROLE_USER)
+                Role userRole = roleService.findByName(EnumRole.ROLE_USER)
                         .orElseThrow(() -> new RuntimeException("Role error!"));
                 roles.add(userRole);
             }
 
             user.setRoles(roles);
-            userRepository.save(user);
+            userService.save(user);
             return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
         } catch (DataIntegrityViolationException e) {
             log.error("Database error: \n" + e.getMessage());
