@@ -57,6 +57,16 @@ Java, Spring boot, Spring Security, Jwt, PostgreSQL
 | id        | INTEGER | Айди роли, первичный ключ, автоинкремент |
 | name      | VARCHAR | Название роли, уникальный, не нулевой    |
 
+### Таблица "messages"
+| Колонка              | Тип     | Комментарий                                   |
+|----------------------|---------|-----------------------------------------------|
+| id                   | BIGINT  | Айди сообщения, первичный ключ, автоинкремент |
+| user_id_who_send     | BIGINT  | Айди отправителя, уникальный, не нулевой      |
+| user_id_who_recieve  | BIGINT  | Айди получателя, не нулевой                   |
+| username_who_send    | VARCHAR | Имя получателя, не нулевой                    |
+| username_who_recieve | VARCHAR | Имя получателя, не нулевой                    |
+| message              | VARCHAR | Сообщение                                     |
+
 ## Запросы
 Для <b>каждого запроса</b>, за исключением "<i>/login</i>", "<i>/register</i>" и "<i>/activate</i>", требуется <b>валидный jwt токен</b>, который должен передаваться в HTTP хэдере типа Bearer.<br>
 <b>Jwt токен</b> генерируется после успешного входа пользователя с помощью "<i>/login</i>".
@@ -144,3 +154,32 @@ Java, Spring boot, Spring Security, Jwt, PostgreSQL
   "password": "relexthebest"
 }
 ```
+#### POST /send-message
+Отправка сообщения пользователю. Если пользователя не существует - выводится ошибка. Пример запроса
+```
+{
+  "username": "relex",
+  "message": "Hello, relex!"
+}
+```
+#### GET /get-messages
+Вывод всех сообщений пользователя. Пример ответа:
+```
+{
+    "messages": [
+        {
+            "id": 8,
+            "usernameWhoSend": "oleg",
+            "usernameWhoRecieve": "relex",
+            "message": "Hello, relex!"
+        },
+        {
+            "id": 9,
+            "usernameWhoSend": "relex",
+            "usernameWhoRecieve": "oleg",
+            "message": "Hello, oleg!"
+        }
+    ]
+}
+```
+
